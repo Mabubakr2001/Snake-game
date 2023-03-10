@@ -4,6 +4,7 @@ class Snake {
   expantionRate = 1;
   #bodySegments = [{ xAxis: 15, yAxis: 15 }];
   direction = { xAxis: 0, yAxis: 0 };
+  lastDirection;
 
   constructor() {
     this.getInputFromUser();
@@ -13,23 +14,28 @@ class Snake {
     window.addEventListener("keydown", ({ key }) => {
       switch (key) {
         case "ArrowUp":
-          if (this.direction.yAxis === 1) break; // If I clicked down arrow before
+          if (this.lastDirection.yAxis !== 0) break; // If I clicked down arrow before
           this.direction = { xAxis: 0, yAxis: -1 };
           break;
         case "ArrowDown":
-          if (this.direction.yAxis === -1) break; // If I clicked up arrow before
+          if (this.lastDirection.yAxis !== 0) break; // If I clicked up arrow before
           this.direction = { xAxis: 0, yAxis: 1 };
           break;
         case "ArrowRight":
-          if (this.direction.xAxis === -1) break; // If I clicked left arrow before
+          if (this.lastDirection.xAxis !== 0) break; // If I clicked left arrow before
           this.direction = { xAxis: 1, yAxis: 0 };
           break;
         case "ArrowLeft":
-          if (this.direction.xAxis === 1) break; // If I clicked right arrow before
+          if (this.lastDirection.xAxis !== 0) break; // If I clicked right arrow before
           this.direction = { xAxis: -1, yAxis: 0 };
           break;
       }
     });
+  }
+
+  getInputDirection() {
+    this.lastDirection = this.direction;
+    return this.direction;
   }
 
   draw() {
@@ -52,8 +58,9 @@ class Snake {
     }
 
     // Update the head based on where we're moving
-    this.#bodySegments[0].xAxis += this.direction.xAxis;
-    this.#bodySegments[0].yAxis += this.direction.yAxis;
+    const inputDirection = this.getInputDirection();
+    this.#bodySegments[0].xAxis += inputDirection.xAxis;
+    this.#bodySegments[0].yAxis += inputDirection.yAxis;
   }
 
   expand() {
