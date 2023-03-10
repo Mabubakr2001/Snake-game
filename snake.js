@@ -13,18 +13,22 @@ class Snake {
     window.addEventListener("keydown", ({ key }) => {
       switch (key) {
         case "ArrowUp":
+          console.log("Up");
           if (this.direction.yAxis === 1) break; // If I clicked down arrow before
           this.direction = { xAxis: 0, yAxis: -1 };
           break;
         case "ArrowDown":
+          console.log("Down");
           if (this.direction.yAxis === -1) break; // If I clicked up arrow before
           this.direction = { xAxis: 0, yAxis: 1 };
           break;
         case "ArrowRight":
+          console.log("Right");
           if (this.direction.xAxis === -1) break; // If I clicked left arrow before
           this.direction = { xAxis: 1, yAxis: 0 };
           break;
         case "ArrowLeft":
+          console.log("Left");
           if (this.direction.xAxis === 1) break; // If I clicked right arrow before
           this.direction = { xAxis: -1, yAxis: 0 };
           break;
@@ -46,9 +50,9 @@ class Snake {
     });
   }
 
-  // How this function works
   update() {
     for (let i = this.#bodySegments.length - 2; i >= 0; i--) {
+      console.log(this.#bodySegments[i]);
       this.#bodySegments[i + 1] = { ...this.#bodySegments[i] }; // The teil takes the position of the previous segment
     }
 
@@ -57,11 +61,10 @@ class Snake {
     this.#bodySegments[0].yAxis += this.direction.yAxis;
   }
 
-  // How this function works!
   expand() {
     for (let i = 0; i < this.expantionRate; i++) {
       this.#bodySegments.push({
-        ...this.#bodySegments[this.#bodySegments.length],
+        ...this.#bodySegments[this.#bodySegments.length - 1],
       });
     }
   }

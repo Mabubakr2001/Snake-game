@@ -4,7 +4,6 @@ import theSnake from "./snake.js";
 let lastTime = 0;
 let gameOver = false;
 
-// Update loop
 function runTheGame(currentTime) {
   if (gameOver) return finishGame();
 
@@ -25,8 +24,8 @@ function mainDraw() {
 }
 
 function mainUpdate() {
-  theSnake.update();
   theFood.update();
+  theSnake.update();
   checkLose();
 }
 
