@@ -1,1 +1,1 @@
-# Simple snake game
+# Simple snake game, have fun
